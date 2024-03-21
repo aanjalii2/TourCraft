@@ -1,0 +1,120 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif; /* Adjust font family as needed */
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Wrapper for TripInformation and Highlights sections */
+  .wrap {
+    width: 450px; /* Adjust width as needed */
+    background-color: #fff; /* White background */
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: center; /* Center the content horizontally (for TripInformation) */
+    margin: 0 auto; /* Center the wrapper horizontally */
+    transform: translateY(-110%) translateX(75%);
+  }
+  .wra {
+    width: 450px; /* Adjust width as needed */
+    background-color: #fff; /* White background */
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: center; /* Center the content horizontally (for TripInformation) */
+    margin: 0 auto; /* Center the wrapper horizontally */
+    transform: translateY(-85%) translateX(75%);
+  }
+  .w {
+    width: 450px; /* Adjust width as needed */
+    background-color: #fff; /* White background */
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: center; /* Center the content horizontally (for TripInformation) */
+    margin: 0 auto; /* Center the wrapper horizontally */
+    transform: translateY(-65%) translateX(75%);
+  }
+  
+  /* Styles for TripInformation section */
+  .trip-details h2,
+  .highlights h3 {
+    font-size: 20px;
+    color: #000000; /* Dark gray text */
+    margin-bottom: 10px;
+  }
+  
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+  
+  .detail-row p {
+    font-size: 16px;
+    color: #000000;
+    margin-bottom: 0;
+  }
+  
+  .detail-row span {
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  /* Styles for Highlights section */
+  .highlights ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin: 0;
+  }
+  
+  .highlights li {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.5; /* Adjust line height for spacing */
+  }
+
+  .home-banner-container {
+    display: flex; /* Allow side-by-side placement of text and image sections */
+  }
+  
+ 
+  
+  .primary-heading {
+    font-size: 28px; /* Adjust heading size */
+    color: #333; /* Adjust heading text color */
+    margin-bottom: 15px; /* Adjust margin after heading */
+  }
+  
+  .primary-text,
+  .secondary-text {
+    font-size: 16px; /* Adjust text size */
+    color: #000000; /* Adjust text color for descriptions */
+    line-height: 1.5; /* Adjust line height for spacing */
+    margin-bottom: 15px;
+    transform: translateY(-5%) translateX(0%); /* Adjust margin between paragraphs */
+  }
+  
+  .secondary-button {
+    background-color: #146190; /* Blue background */
+    color: #fff; /* White text */
+    border: none;
+    padding: 10px 20px; /* Adjust padding for button */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-flex; /* Allow text and icon to align horizontally */
+    align-items: center; /* Center icon vertically within button */
+  }
+  
+  .secondary-button > svg {
+    margin-left: 5px; /* Add spacing between text and icon */
+  }
+  
+  
+  .home-banner-image {
+    width: 800%; /* Adjust image width if needed */
+  }
+  
