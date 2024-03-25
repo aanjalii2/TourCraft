@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+
 import { useNavigate } from 'react-router-dom';
-import './signup.css'; 
+import './ReactToastify.css';
+import './signup.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -15,7 +18,7 @@ const Signup = () => {
     contact_number: '',
     nationality: ''
   });
-  const [usernameExists, setUsernameExists] = useState(false); 
+  const [usernameExists, setUsernameExists] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -26,27 +29,22 @@ const Signup = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.password !== formData.confirm_password) {
-      alert("Passwords do not match");
-      return;
-    }
+  
     axios.post('http://127.0.0.1:8000/app/signup/', formData)
       .then(res => {
         console.log(res);
         toast.success('Sign Up Successful');
+        
         navigate("/login");
       })
       .catch(err => {
         console.error(err);
-        if (err.response && err.response.data && err.response.data.username) {
-          setUsernameExists(true);
-        } else {
-          toast.error('Failed to Sign Up');
-        }
+        toast.error('Failed to Sign Up');
       });
   };
+
 
   return (
     <div className='wrapperr'>
