@@ -19,7 +19,7 @@ const DestinationSelect = () => {
           <img src={image1} alt="Pokhara" />
           <div className="destination-info">
             <h3>Phokhara</h3>
-            <p>Pokhara, nestled in the Himalayas of Nepal, captivates visitors with its stunning lakes, majestic mountain views, and vibrant culture.</p>
+            <p>Pokhara, n the Himalayas of Nepal, captivates visitors with its stunning lakes, majestic mountain views, and vibrant culture.</p>
             
     
              <NavLink to="/pokhara">

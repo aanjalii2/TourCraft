@@ -74,7 +74,7 @@ const Signup = () => {
         <div className="input-box1">
           <input type="text" name="nationality" placeholder="Nationality" value={formData.nationality} onChange={handleChange} required />
         </div>
-        <button type="submit" name="signup">Signup</button>
+        <button type="submit" name="signup">SignUp</button>
         <div className="login-link">
           <p>Already have an account? <a href="#">Login</a></p>
         </div>
