@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './ReactToastify.css';
 import './signup.css';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    first_name: '',
-    last_name: '',
-    username: '',
+    name: '',
     email: '',
     password: '',
-    confirm_password: '',
-    contact_number: '',
-    nationality: ''
+    phonenumber: '',
+    nationality:'',
+    role: 'TRAVELER' // Default role set to 'Traveler'
   });
   const [usernameExists, setUsernameExists] = useState(false);
   const navigate = useNavigate();
@@ -29,14 +26,11 @@ const Signup = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  
-    axios.post('http://127.0.0.1:8000/app/signup/', formData)
+  const handleSignup = () => {
+    axios.post('http://127.0.0.1:8000/users/api/Customuser/', formData)
       .then(res => {
         console.log(res);
-        toast.success('Sign Up Successful');
-        
+        toast('Sign Up Successful');
         navigate("/login");
       })
       .catch(err => {
@@ -45,40 +39,31 @@ const Signup = () => {
       });
   };
 
-
   return (
     <div className='wrapperr'>
-      <form onSubmit={handleSubmit}>
+      <form>
         <h1>Register</h1>
         <div className="input-boxx">
-          <input type="text" name="first_name" placeholder="First Name" value={formData.first_name} onChange={handleChange} required />
-        </div>
+        <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} required /> </div>
         <div className="input-box1">
-          <input type="text" name="last_name" placeholder="Last Name" value={formData.last_name} onChange={handleChange} required />
+        <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required /> </div>
+        <div className="input-boxxx">
+        <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required /> </div>
+        <div className="input-box2">
+        <input type="text" name="phonenumber" placeholder="Phone Number" value={formData.phonenumber} onChange={handleChange} required />
         </div>
-        <div className="input-boxx">
-          <input type="text" name="username" placeholder="Username" value={formData.username} onChange={handleChange} required />
+        <div className="input-boxxxx">
+        <input type="text" name="nationality" placeholder="Nationality" value={formData.address} onChange={handleChange} required />
         </div>
-        <div className="input-box1">
-          <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
-        </div>
-        <div className="input-boxx">
-          <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
-        </div>
-        <div className="input-box1">
-          <input type="password" name="confirm_password" placeholder="Confirm Password" value={formData.confirm_password} onChange={handleChange} required />
-        </div>
-        <div className="input-boxx">
-          <input type="text" name="contact_number" placeholder="Contact Number" value={formData.contact_number} onChange={handleChange} required />
-        </div>
-        <div className="input-box1">
-          <input type="text" name="nationality" placeholder="Nationality" value={formData.nationality} onChange={handleChange} required />
-        </div>
-        <button type="submit" name="signup">SignUp</button>
+        
+        {/* Set the role field to "Traveler" */}
+        <input type="hidden" name="role" value="TRAVELER" />
+        <button onClick={handleSignup} type="button">Sign Up</button>
         <div className="login-link">
           <p>Already have an account? <a href="#">Login</a></p>
         </div>
       </form>
+      {/* Error message for username existence */}
       {usernameExists && (
         <div className="popup">
           <p>Username already exists. Please choose a different one.</p>

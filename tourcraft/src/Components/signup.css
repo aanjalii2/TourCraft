@@ -1,132 +1,202 @@
 *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  
-  body {
-   
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: azure;
-  } 
-.wrapperr {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+body {
  
-  width: 650px;
-  background-color:#146190;
-  color: aliceblue;
-  border-radius: 10px;
-  padding: 60px 40px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
   justify-content: center;
   align-items: center;
-  display: flex;
-  height: 100%;
-  transform: translateY(20%) translateX(50%);
+  min-height: 100vh;
 }
-  
-  
-  
+
+.wrapperr {
+
+width: 550px;
+background-color:#146190;
+color: aliceblue;
+border-radius: 10px;
+padding: 60px 40px;
+justify-content: center;
+align-items: center;
+display: flex;
+height: 100%;
+transform: translateY(15%) translateX(70%);
+}
+
+
+
 .wrapperr h1 {
-  font-size: 36px;
-  text-align: center;
+font-size: 36px;
+text-align: center;
 
 }
-  .wrapper .input-boxx {
-    
-    
-    position: absolute;
-    top: 10px; /* Adjust as needed */
-    left: 10px; /* Adjust as needed */
-  }
+.wrapperr .input-boxx {
   
-  .wrapper .input-box1 {
-    
-    position: relative;
-    width: 100%;
-    height: 50px;
-    /* background-color: aquamarine; */
-    margin: 30px 0;
-    transform: translateY(20%) translateX(30%);
-  }
   
-  .input-boxx input {
-    width: 100%;
-   
-    background: transparent;
-   
+  position: absolute;
+  top: 100px; /* Adjust as needed */
+  left: 170px; /* Adjust as needed */
+}
+.wrapperr .input-boxxx {
   
-    border: 2px solid rgba(255, 255, 255, .2);
-    border-radius: 40px;
-    font-size: 16px;
-    color: #fff;
-    padding: 10px 15px;
-    transform: translateY(30%) translateX(-60%);
-  }
-  .input-boxx input::placeholder{
-    color: #fff;
-  }
- 
-  .input-box1 input::placeholder{
-    color: #fff;
-  }
-  .input-box1 input {
-    width: 100%;
   
-    background: transparent;
-   
-    border: 2px solid rgba(255, 255, 255, .2);
-    border-radius: 40px;
-    font-size: 16px;
-    color: #fff;
-    padding: 10px 15px;
-    transform: translateY(-70%) translateX(50%);
-    
-  }
-  .input-box input::placeholder{
-    color: #fff;
-  }
-  /* .input-box .icon{
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 16px;
+  position: absolute;
+  top: 170px; /* Adjust as needed */
+  left: 170px; /* Adjust as needed */
+}
+.wrapperr .input-boxxxx {
   
-  } */
+  
+  position: absolute;
+  top:240px; /* Adjust as needed */
+  left: 300px; /* Adjust as needed */
+}
+.wrapperr .input-box1 {
+  position: absolute;
+  top:0px; /* Adjust as needed */
+  left: -60px; /* Adjust as needed */
+}
+.wrapperr .input-box2 {
+  position: absolute;
+  top:-10px; /* Adjust as needed */
+  left: -60px; /* Adjust as needed */
+}
 
-  .wrapperr button{
+.wrapperr .input-box1 { 
+  position: relative;
   width: 100%;
-  height: 45px;
-  background: #fff;
-  border: none;
-  outline: none;
+  height: 50px;
+  /* background-color: aquamarine; */
+  margin: 30px 0;
+  transform: translateY(20%) translateX(30%);
+}
+.wrapperr .input-box2 { 
+  position: relative;
+  width: 100%;
+  height: 50px;
+  /* background-color: aquamarine; */
+  margin: 30px 0;
+  transform: translateY(20%) translateX(30%);
+}
+
+
+.input-boxx input {
+  width: 100%;
+ 
+  background: transparent;
+ 
+
+  border: 2px solid rgba(255, 255, 255, .2);
   border-radius: 40px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, .1);
-  cursor: pointer;
   font-size: 16px;
-  color: #333;
-  font-weight: 700;
-  }
-  .wrapperr .login-link {
-  font-size: 14.5px;
-  text-align: center;
-  margin: 20px 0 15px;
-  }
-  .login-link p a{
   color: #fff;
-  text-decoration: none;
-  font-weight: 600;
-  }
-  .login-link p a:hover{
-  text-decoration: underline;
-  }
+  padding: 10px 15px;
+  transform: translateY(30%) translateX(-60%);
+}
+.input-boxx input::placeholder{
+  color: #fff;
+}
+.input-boxxx input {
+  width: 100%;
+ 
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, .2);
+  border-radius: 40px;
+  font-size: 16px;
+  color: #fff;
+  padding: 10px 15px;
+  transform: translateY(30%) translateX(-60%);
+}
+.input-boxxx input::placeholder{
+  color: #fff;
+}
+
+.input-boxxxx input {
+  width: 100%;
+ 
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, .2);
+  border-radius: 40px;
+  font-size: 16px;
+  color: #fff;
+  padding: 10px 85px;
+  transform: translateY(30%) translateX(-60%);
+}
+.input-boxxxx input::placeholder{
+  color: #fff;
+}
+
+.input-box1 input::placeholder{
+  color: #fff;
+}
+.input-box1 input {
+  width: 100%;
+
+  background: transparent;
+ 
+  border: 2px solid rgba(255, 255, 255, .2);
+  border-radius: 40px;
+  font-size: 16px;
+  color: #fff;
+  padding: 10px 15px;
+  transform: translateY(-70%) translateX(50%);
   
-  
+}
+.input-box2 input::placeholder{
+  color: #fff;
+}
+.input-box2 input {
+  width: 100%;
+
+  background: transparent;
+ 
+  border: 2px solid rgba(255, 255, 255, .2);
+  border-radius: 40px;
+  font-size: 16px;
+  color: #fff;
+  padding: 10px 15px;
+  transform: translateY(-70%) translateX(50%);
+}
+.input-boxx input::placeholder{
+  color: #fff;
+}
+
+
+.wrapperr button{
+width: 100%;
+height: 45px;
+background: #fff;
+border: none;
+outline: none;
+border-radius: 40px;
+box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+cursor: pointer;
+font-size: 16px;
+color: #333;
+font-weight: 700;
+transform: translateY(50%) translateX(0%);
+}
+.wrapperr .login-link {
+font-size: 14.5px;
+text-align: center;
+margin: 20px 0 15px;
+transform: translateY(60%) translateX(0%);
+}
+.login-link p a{
+color: #fff;
+text-decoration: none;
+font-weight: 600;
+}
+.login-link p a:hover{
+text-decoration: underline;
+}
+

@@ -1,12 +1,47 @@
-import React from 'react';
 import './DestinationSelect.css';
 import image1 from "../Assets/image1.png";
 import image2 from "../Assets/image2.png";
 import image3 from "../Assets/image3.png";
 import { NavLink } from 'react-router-dom';
-
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const DestinationSelect = () => {
+  const [destinations, setDestinations] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get('http://127.0.0.1:8000/destinations/')
+      .then((response) => {
+        setDestinations(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching destinations:', error);
+      });
+  }, []);
+
+//   return (
+//     <div className="destination-select-container">
+//       <h2>Popular Destinations</h2>
+//       <div className="destinations">
+//         {destinations.map((destination) => (
+//           <div key={destination.id} className="destination-card">
+//             <img src={destination.image} alt={destination.name} />
+//             <div className="destination-info">
+//               <h3>{destination.name}</h3>
+//               <p>{destination.description}</p>
+//               {/* Add more details or buttons as needed */}
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default DestinationSelect;
+
+
   return (
     <div className="destination-select-container">
       <div className="search-bar">

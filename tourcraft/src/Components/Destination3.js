@@ -56,7 +56,7 @@ const TripInformation = () => {
           ))}
         </ul>
 
-        <NavLink to="/destinationselect">
+        <NavLink to="/Booking">
             <button className="secondary-button">
               Book Now 
             </button>
@@ -93,9 +93,6 @@ Whether you're seeking adventure, relaxation, or cultural immersion, Bandipur ha
         <div className="home-image-sectionn">
           <img src={image33} alt="" />
         </div>
-        {/* <div className="home-image-sectio">
-          <img src={imagee1} alt="" />
-        </div> */}
       </div>
       <TripInformation />
     </div>

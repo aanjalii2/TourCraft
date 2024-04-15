@@ -69,3 +69,65 @@
  padding: 10px 15px;
   border-radius: 5px;
 }
+
+
+
+body {
+  font-family: Arial, sans-serif; /* Adjust font family as needed */
+  background-color: #F0FFFF; /* Light gray background */
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.wrapper {
+  width: 800px; /* Adjust width as needed */
+  background-color: #fff; /* White background */
+  border-radius: 10px;
+  padding: 30px;
+  margin: 0 auto; /* Center the wrapper horizontally */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 5px;
+  font-size: 16px;
+  color: #333; /* Dark gray text */
+}
+
+.search-bar button {
+  background-color: #4CAF50; /* Blue background */
+  color: #fff; /* White text */
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+.search-bar button:hover {
+  background-color: #3e8e41; /* Darker blue on hover */
+}
+
+.destinations {
+  text-align: center;
+}
+
+.destinations h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
