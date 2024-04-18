@@ -28,7 +28,7 @@ body {
   }
   .w {
     width: 450px; /* Adjust width as needed */
-    background-color: #fff; /* White background */
+    background-color: #fff; 
     border-radius: 10px;
     padding: 30px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
@@ -37,11 +37,10 @@ body {
     transform: translateY(-65%) translateX(75%);
   }
   
-  /* Styles for TripInformation section */
   .trip-details h2,
   .highlights h3 {
     font-size: 20px;
-    color: #000000; /* Dark gray text */
+    color: #000000; 
     margin-bottom: 10px;
   }
   

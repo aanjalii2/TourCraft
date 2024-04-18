@@ -1,6 +1,8 @@
+// Booking.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Booking.css';
+
 const Booking = () => {
   const [user, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -20,7 +22,7 @@ const Booking = () => {
 
       console.log('Booking submitted successfully:', response.data);
       alert('Booking submitted successfully!');
-      // Clear the form after successful submission
+    
       setEmail('');
       setPhone('');
       setDestination('');
@@ -32,9 +34,9 @@ const Booking = () => {
   };
 
   return (
-    <div className="w"> {/* Use the 'w' class for consistent styling */}
+    <div className="booking-page-wrapper"> 
       <form onSubmit={handleSubmit}>
-        <h2>Booking Form</h2>
+        <h2 className="booking-heading">Booking Form</h2>
         <label htmlFor="email">Email:</label>
         <input
           type="email"
@@ -67,7 +69,7 @@ const Booking = () => {
           onChange={(e) => setDate(new Date(e.target.value))}
           required
         />
-        <button type="submit" className="button">
+        <button type="submit" className="booking-button">
           Book Now
         </button>
       </form>

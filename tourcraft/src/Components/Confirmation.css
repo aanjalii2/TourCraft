@@ -1,0 +1,30 @@
+.confirmation-container {
+    text-align: center;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 400px;
+    margin: 0 auto;
+    transform: translateY(40%) translateX(15%);
+    background-color: #eaf6ff; /* Light blue background color */
+  }
+  
+  .confirmation-container h1 {
+    color: #333;
+  }
+  
+  .confirmation-container p {
+    color: #666;
+    margin-bottom: 10px;
+  }
+  
+  .confirmation-container a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .confirmation-container a:hover {
+    text-decoration: underline;
+  }
+  

@@ -27,10 +27,11 @@ from django.urls import reverse, reverse_lazy
 import requests as req # type: ignore
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
+from django.http import HttpResponse
+from django.conf import settings
+import os
 
 
-
-#Create your views here.
 class CustomUserViewSet(viewsets.ModelViewSet):
     queryset= CustomUser.objects.all()
     serializer_class= CustomUserSerilizer
@@ -67,7 +68,7 @@ class LoginViewSet(viewsets.ViewSet):
 class DestinationListAPIView(ListCreateAPIView):
     queryset = Destination.objects.all()
     serializer_class = DestinationSerializer
-    permission_classes = [IsAdminUser]
+    # permission_classes = [IsAdminUser]
 
     def get_queryset(self):
         return Destination.objects.all()
@@ -78,6 +79,36 @@ class DestinationListAPIView(ListCreateAPIView):
             return Response({"message": "Destination created successfully."}, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+# def display_images(request):
+ 
+#     if request.method == 'GET':
+ 
+#         # getting all the objects of hotel.
+#         destinations = Destination.objects.all()
+#         return render((request,
+#                        {'hotel_images': Destination}))
+
+
+
+def display_images(request):
+    image_path = 'C:\\Users\\Acer\\Downloads\\Tour\\backend\\media\\media\\image1.png'
+    
+  
+    # Construct the absolute file path to the image
+    image_absolute_path = os.path.join(settings.BASE_DIR, image_path)
+
+    # Check if the image file exists
+    if os.path.exists(image_absolute_path):
+        with open(image_absolute_path, 'rb') as f:
+            # Read the image file content
+            image_data = f.read()
+
+        # Create an HTTP response with the image content
+        return HttpResponse(image_data, content_type='image/jpeg')  # Adjust content type as per your image format
+    else:
+        # Return a 404 Not Found response if the image file does not exist
+        return HttpResponse(status=404)
 
 class DestinationDeleteAPIView(APIView):
     permission_classes = [IsAdminUser]

@@ -10,15 +10,16 @@ const Home = () => {
       <div className="home-banner-container">
         
         <div className="home-text-section">
-          <h1 className="primary-heading">
+          <h1 className="primary-subheading">
             Tour Craft
           </h1>
-          <p className="primary-textt">
+          <p className="primary-text">
           Embark on a journey of discovery with our comprehensive platform designed to elevate your travel experiences throughout the breathtaking landscapes of Nepal.
-          
+          Embark on a journey of discovery with our comprehensive platform designed to elevate your travel experiences throughout the breathtaking landscapes of Nepal.
           </p>
-          <p className="secondary-textt">
+          <p className="secondary-text">
            
+            Explore Nepal's rich cultural heritage, majestic mountains, and vibrant cities with ease through our intuitive interface. Whether you're seeking adrenaline-pumping adventures, serene retreats, or immersive cultural experiences, we've got you covered.
             Explore Nepal's rich cultural heritage, majestic mountains, and vibrant cities with ease through our intuitive interface. Whether you're seeking adrenaline-pumping adventures, serene retreats, or immersive cultural experiences, we've got you covered.
           </p>
           
@@ -38,7 +39,6 @@ const Home = () => {
       
     </div>
     </div>
-    
     
     
   );

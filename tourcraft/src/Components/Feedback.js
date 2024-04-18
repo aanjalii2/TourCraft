@@ -23,7 +23,7 @@ const Feedback = () => {
   };
 
   return (
-    <div className="form-container">
+    <div className="form-containerr">
       <form onSubmit={handleSubmit} className="form">
         <label htmlFor="name">Name:</label>
         <input
