@@ -9,16 +9,13 @@ admin.site.register(CustomUser, UserAdmin)
 
 class DestinationAdmin(admin.ModelAdmin):
     model = Destination 
-    list_display = ['id', 'name', 'description', 'image']
-    fieldsets = (
-        (None, {'fields': ('name', 'description', 'image')}),
-        ('Important dates', {'fields': ('created_at',)}),
-    )
+    list_display = ['id', 'destination_name', 'description', 'image']
+    
 
 admin.site.register(Destination, DestinationAdmin)
 class BookingAdmin(admin.ModelAdmin):
     model = Booking
-    list_display = ['id', 'user', 'phone', 'destination', 'date']
+    list_display = ['id', 'user', 'phone', 'destination_name', 'date']
 
 admin.site.register(Booking, BookingAdmin)
 

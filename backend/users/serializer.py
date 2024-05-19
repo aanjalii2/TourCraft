@@ -4,6 +4,7 @@ from .models import Destination
 from .models import Booking
 
 from .models import Payment
+from .models import Trip
 
 
 
@@ -14,7 +15,6 @@ class CustomUserSerilizer(serializers.ModelSerializer):
 
         extra_kwargs = {
             'password': {'write_only':True},
-            
         }
     def create(self, validated_data):
         if (validated_data):
@@ -28,16 +28,23 @@ class LoginSerializer(serializers.Serializer):
 class DestinationSerializer(serializers.ModelSerializer):
    class Meta:
        model = Destination
-       fields = ['name', 'description', 'image']
+       fields = '__all__'
+
+
+
+class TripSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Trip
+    fields = '__all__'
+
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
-        fields = ['user', 'phone', 'destination', 'date']
+        fields = '__all__'
 
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
         fields = '__all__'
-
 
     

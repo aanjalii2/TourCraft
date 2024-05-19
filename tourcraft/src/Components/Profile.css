@@ -1,0 +1,40 @@
+/* Profile.css */
+
+.profile-container {
+    max-width: 4xl; /* Assuming 4xl refers to a unit like rem */
+    margin: 40px auto; /* Margin-top of 40 units and centered horizontally */
+  }
+  
+  .profile-card {
+    background-color: white;
+    box-shadow: some-shadow; /* Replace with your desired shadow style */
+    border-radius: 8px; /* Rounded corners with 8px radius */
+    overflow: hidden;
+  }
+  
+  .loading-message,
+  .no-data-message {
+    text-align: center;
+    padding: 20px; /* Padding of 20 units */
+  }
+  
+  .profile-content {
+    padding: 20px; /* Padding of 20 units */
+  }
+  
+  .profile-info,
+  .additional-info {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    margin-bottom: 16px; /* Margin-bottom of 16 units */
+  }
+  
+  .info-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px; /* Margin-bottom of 8 units */
+  }
+  
+  .info-label {
+    font-weight: bold;
+  }  

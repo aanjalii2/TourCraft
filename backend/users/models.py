@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .manager import CustomUserManager
 from django.conf import settings
-
+import secrets
 
 class CustomUser(AbstractUser):
     class Role(models.TextChoices):
@@ -26,18 +26,30 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
+
+
     
 class Destination(models.Model):
-    name = models.CharField(max_length=100)
+    destination_name = models.CharField(max_length=100)
     description = models.TextField()
     image = models.ImageField(upload_to='media/')
     def __str__(self):
-        return self.name
+        return self.destination_name
+class Trip(models.Model):
+  destination_name = models.ForeignKey(Destination, on_delete=models.CASCADE)
+  trip_duration = models.CharField(max_length=100)
+  max_altitude = models.CharField(max_length=50, blank=True)
+  trip_type = models.CharField(max_length=255, blank=True)
+  transport = models.CharField(max_length=255, blank=True)
+  cost = models.CharField(max_length=100)
+
+  def __str__(self):
+    return self.destination_name
 
 class Booking(models.Model):
     user = models.CharField(max_length=100)
     phone = models.CharField(max_length=20, null=True, blank=True)
-    destination = models.ForeignKey(Destination, on_delete=models.CASCADE)
+    destination_name = models.ForeignKey(Destination, on_delete=models.CASCADE)
     date = models.DateField()
 
     def __str__(self):
@@ -54,11 +66,15 @@ class Booking(models.Model):
 
 # Create your models here.
 class Payment(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    destination = models.ForeignKey(Destination, on_delete=models.CASCADE)
-    booking = models.OneToOneField(Booking, on_delete=models.CASCADE)
+    return_url = models.URLField()
+    website_url = models.URLField()
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    payment_date = models.DateTimeField(auto_now_add=True)
+    Booking_id = models.CharField(max_length=100)
+    destination_name = models.CharField(max_length=100)
+    customer_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=15)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Payment for {self.booking}"
+        return f"Payment for {self.purchase_order_name} ({self.amount})"

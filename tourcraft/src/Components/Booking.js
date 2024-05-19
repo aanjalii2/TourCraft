@@ -2,11 +2,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Booking.css';
+import { NavLink } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Booking = () => {
   const [user, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [destination, setDestination] = useState('');
+  const [destination_name, setDestination] = useState('');
   const [date, setDate] = useState(new Date());
 
   const handleSubmit = async (e) => {
@@ -17,11 +19,12 @@ const Booking = () => {
         user,
         phone,
         date: date.toISOString().split('T')[0],
-        destination,
+        destination_name,
       });
 
       console.log('Booking submitted successfully:', response.data);
-      alert('Booking submitted successfully!');
+      
+      toast.success('Booking submitted successfully');
     
       setEmail('');
       setPhone('');
@@ -29,7 +32,8 @@ const Booking = () => {
       setDate(new Date());
     } catch (error) {
       console.error('Error submitting booking:', error);
-      alert('An error occurred while submitting the booking.');
+
+      toast.success('An error occurred while submitting the booking.');
     }
   };
 
@@ -57,7 +61,7 @@ const Booking = () => {
         <input
           type="text"
           id="destination"
-          value={destination} // Pre-filled destination (adjust if needed)
+          value={destination_name} // Pre-filled destination (adjust if needed)
           onChange={(e) => setDestination(e.target.value)}
           required
         />
@@ -69,9 +73,12 @@ const Booking = () => {
           onChange={(e) => setDate(new Date(e.target.value))}
           required
         />
+        
+        <NavLink to="/khalti">
         <button type="submit" className="booking-button">
           Book Now
         </button>
+        </NavLink>
       </form>
     </div>
   );

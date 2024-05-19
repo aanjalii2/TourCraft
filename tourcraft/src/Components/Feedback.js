@@ -1,6 +1,7 @@
-// FormComponent.jsx
-
 import React, { useState } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+
 import './Feedback.css';
 
 const Feedback = () => {
@@ -16,15 +17,32 @@ const Feedback = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your form submission logic here
-    console.log(formData); // For demonstration, logging form data to console
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/feedback/feedback/', formData);
+
+      console.log('Feedback submitted successfully:', response.data);
+      
+      toast.success('Feedback submitted successfully');
+      
+      // Clear the form after successful submission
+      setFormData({
+        name: '',
+        email: '',
+        message: '',
+        date: new Date().toISOString().split('T')[0]
+      });
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
+
+      toast.error('An error occurred while submitting the feedback.');
+    }
   };
 
   return (
-    <div className="form-containerr">
-      <form onSubmit={handleSubmit} className="form">
+    <div className="feedback-container">
+      <form onSubmit={handleSubmit} className="feedback-form">
         <label htmlFor="name">Name:</label>
         <input
           type="text"

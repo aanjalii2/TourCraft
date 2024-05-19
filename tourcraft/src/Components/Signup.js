@@ -13,7 +13,7 @@ const Signup = () => {
     password: '',
     phonenumber: '',
     nationality:'',
-    role: 'TRAVELER' // Default role set to 'Traveler'
+    role: 'TRAVELER'  
   });
   const [usernameExists, setUsernameExists] = useState(false);
   const navigate = useNavigate();

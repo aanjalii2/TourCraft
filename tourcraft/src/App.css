@@ -153,11 +153,18 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  justify-content: justify;
+ 
 }
 
 .about-section-image-container {
   flex: 0.9;
   margin-right: 1rem;
+}
+.about-section-image-containe {
+  flex: 0.9;
+  margin-left: 1rem;
+  transform: translateY(195%) translateX(0%);
 }
 .about-section-text-container {
   flex: 1;
@@ -370,3 +377,35 @@ nav {
   
 }
  
+/* Styles for buttons */
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+ 
+/* Styles for buttons */
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  background-color: #146190;
+}
+
+.custom-button {
+  background-color: #146190; /* White background color */
+  border: none; /* Remove border */
+  padding: 10px; /* Add padding */
+  cursor: pointer; /* Add cursor pointer on hover */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.custom-button:hover {
+  background-color: white; /* Orange background color on hover */
+}
+
