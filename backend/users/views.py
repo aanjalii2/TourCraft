@@ -153,32 +153,6 @@ class BookingRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView)
     serializer_class = BookingSerializer
     permission_classes = [IsAdminUser]
 
-# def verify_payment(token, amount):
-#     data = {
-#         'token': token,
-#         'amount': amount,
-#     }
-#     response = requests.post('/khalti/verifypayment/', data=data)
-#     return response.json()
-
-# class UserView(APIView):
-#     permission_classes = [IsAuthenticated]
-
-#     def get(self, request):
-#         access_token = request.headers.get('Authorization').split()[1]
-
-#         if not access_token:
-#             raise AuthenticationFailed('User not authenticated!')
-
-#         try:
-#             user = request.user
-#             serializer = CustomUserSerilizer(user)
-#             return Response(serializer.data)
-
-#         except Exception as e:
-
-#             return Response({'error': f'Error decoding token: {str(e)}'}, status=status.HTTP_401)
-
 class UserView(APIView):
     permission_classes = [IsAuthenticated]
 
