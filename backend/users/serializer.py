@@ -6,8 +6,6 @@ from .models import Booking
 from .models import Payment
 from .models import Trip
 
-
-
 class CustomUserSerilizer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
@@ -24,13 +22,11 @@ class CustomUserSerilizer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only ="True")
-    
+
 class DestinationSerializer(serializers.ModelSerializer):
    class Meta:
        model = Destination
        fields = '__all__'
-
-
 
 class TripSerializer(serializers.ModelSerializer):
   class Meta:
@@ -40,11 +36,9 @@ class TripSerializer(serializers.ModelSerializer):
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
-        fields = '__all__'
+        fields = 'phone', 'date', 'destination', 'trip'
 
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
         fields = '__all__'
-
-    

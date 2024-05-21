@@ -11,8 +11,6 @@ from . import views
 from .views import TripListView
 # from .views import VerifyEsewa
 
-
-
 router= DefaultRouter()
 router.register("Customuser",CustomUserViewSet)
 
@@ -24,7 +22,6 @@ urlpatterns = [
     path('logout/',logout, name='logout'),
     path('destinations/', DestinationListAPIView.as_view(), name='destination-list'),
 
-   
     # path('verify-email/<str:email>/<uuid:token>/', views.verify_email, name='verify_email'),
     path('destinations/<int:destination_id>/', DestinationDeleteAPIView.as_view(), name='destination-delete'),
     path('images/', display_images, name = 'images'),
@@ -33,10 +30,8 @@ urlpatterns = [
     path('trips/<str:destination_name>/', TripListView.as_view(), name='trip_by_destination'),
     path('api/payment/initiate/', views.initiate_payment),
     # path("verify-email/", views.verify_email, name="verify-email"),
-    # path("resend-otp", views.resend_otp, name="resend-otp"),
-  
+    # path("resend-otp", views.resend_otp, name="resend-otp"), 
 ]
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-

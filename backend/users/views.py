@@ -21,9 +21,6 @@ from .serializer import TripSerializer
 from .models import Payment
 from .serializer import PaymentSerializer
 
-
-
-
 class CustomUserViewSet(viewsets.ModelViewSet):
     queryset= CustomUser.objects.all()
     serializer_class= CustomUserSerilizer
@@ -34,9 +31,6 @@ class CustomUserViewSet(viewsets.ModelViewSet):
             serailizer.save() 
             return Response(serailizer.data,status=status.HTTP_201_CREATED)
         return Response(serailizer.errors,status=status.HTTP_400_BAD_REQUEST)
-
-
-
 
 class LoginViewSet(viewsets.ViewSet):
     serializer_class = LoginSerializer
@@ -70,8 +64,6 @@ def get_specific_user(request, user_id):
             return Response({'message': 'User not found or unauthorized access'}, status=status.HTTP_404_NOT_FOUND)
     else:
         return Response({'error': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-    
-
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -101,8 +93,6 @@ class DestinationListAPIView(ListCreateAPIView):
             return Response({"message": "Destination created successfully."}, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
-
 
 class TripListView(ListCreateAPIView):
   queryset = Trip.objects.all()
@@ -117,15 +107,10 @@ class TripListView(ListCreateAPIView):
             return Response({"message": "Trip created successfully."}, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-            
-
-
-
 
 def display_images(request):
     image_path = 'C:\\Users\\Acer\\Downloads\\Tour\\backend\\media\\media\\image1.png'
-    
-  
+
     # Construct the absolute file path to the image
     image_absolute_path = os.path.join(settings.BASE_DIR, image_path)
 
@@ -152,22 +137,16 @@ class DestinationDeleteAPIView(APIView):
         except Destination.DoesNotExist:
             return Response({"message": "Destination not found."}, status=status.HTTP_404_NOT_FOUND)
 
-
 class BookingListCreateAPIView(generics.ListCreateAPIView):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
     authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
-    
-    # def perform_create(self, serializer):
-    #     # Ensure that user is a CustomUser instance
-    #     if isinstance(self.request.user, CustomUser):
-    #         serializer.save(user=self.request.user)
-    #         return Response({"message": "Booking successful"}, status=status.HTTP_201_CREATED)
-    #     else:
-    #         # Handle error case where request user is not a CustomUser instance
-    #         return Response({"message": "Invalid user type."}, status=status.HTTP_400_BAD_REQUEST)
+    def perform_create(self, serializer):
+        trip = serializer.validated_data.get('trip')
+        trip_obj = Trip.objects.get(id=trip.id)
+        serializer.save(cost=trip_obj.cost, user=self.request.user)
 
 class BookingRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Booking.objects.all()
@@ -199,6 +178,7 @@ class BookingRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView)
 #         except Exception as e:
 
 #             return Response({'error': f'Error decoding token: {str(e)}'}, status=status.HTTP_401)
+
 class UserView(APIView):
     permission_classes = [IsAuthenticated]
 
