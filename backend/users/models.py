@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .manager import CustomUserManager
-from django.conf import settings
-import secrets
 
 class CustomUser(AbstractUser):
     class Role(models.TextChoices):
@@ -27,14 +25,13 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.email
 
-
-    
 class Destination(models.Model):
     destination_name = models.CharField(max_length=100)
     description = models.TextField()
     image = models.ImageField(upload_to='media/')
     def __str__(self):
         return self.destination_name
+
 class Trip(models.Model):
   destination_name = models.ForeignKey(Destination, on_delete=models.CASCADE)
   trip_duration = models.CharField(max_length=100)
@@ -44,7 +41,7 @@ class Trip(models.Model):
   cost = models.CharField(max_length=100)
 
   def __str__(self):
-    return self.destination_name
+    return self.destination_name.destination_name
 
 class Booking(models.Model):
     user = models.CharField(max_length=100)
