@@ -51,11 +51,11 @@ const DestinationSelect = () => {
       </div>
       <div className="destinations">
         {destinations.map(destination => (
-          <div key={destination.destination_name} className="destination-card">
-            <h3>{destination.destination_name}</h3>
+          <div key={destination.id} className="destination-card">
+            <h3>{destination.name}</h3>
             <p>{truncateDescription(destination.description, 70)}</p>
-            {destination.image && <img src={`http://127.0.0.1:8000/users/images/`} alt={destination.destination_name} />}
-            <NavLink to={`/destination/${destination.destination_name}`}>
+            {destination.image && <img src={`http://127.0.0.1:8000/users/images/`} alt={destination.id} />}
+            <NavLink to={`/destination/${destination.id}`}>
               <button type="button">View Details</button>
             </NavLink>
           </div>

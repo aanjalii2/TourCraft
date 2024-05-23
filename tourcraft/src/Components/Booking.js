@@ -2,56 +2,61 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './Booking.css';
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useParams } from 'react-router-dom';
 
 const Booking = () => {
-  const [user, setEmail] = useState('');
-  const [destination, setDestination] = useState('');
-  const [trip, setTrip] = useState('');
+  const [user, setUser] = useState('');
   const [phone, setPhone] = useState('');
-  const [cost, setCost] = useState('');
+  // const [cost, setCost] = useState('');
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+  const { destinationId, tripid } = useParams(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    
+
     try {
-      const token = localStorage.getItem('token'); 
+      const token = localStorage.getItem('token'); // Retrieve the token from localStorage
+      if (!token) {
+        throw new Error('Token not found');
+      }
 
       const requestData = {
-        user: user,
-        destination: destination,
-        trip: trip,
-        phone: phone,
-        cost: cost,
-        date: date,
+        user,
+        destination: destinationId, // Use destinationId from URL
+        trip: tripid, // Use tripId from URL
+        phone,
+        date,
       };
 
       const response = await axios.post('http://127.0.0.1:8000/users/bookings/', requestData, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Token ${token}`,
         },
       });
 
       console.log('Booking submitted successfully:', response.data);
       toast.success('Booking submitted successfully');
 
-      setEmail('');
-      setDestination('');
-      setTrip('');
+      // Reset form fields
+      setUser('');
       setPhone('');
-      setCost('');
+      // setCost('');
       setDate(new Date().toISOString().split('T')[0]);
     } catch (error) {
       console.error('Error submitting booking:', error);
       if (error.response) {
         console.error('Server responded with:', error.response.data);
+        toast.error(`Error: ${JSON.stringify(error.response.data)}`);
       } else if (error.request) {
         console.error('No response received:', error.request);
+        toast.error('No response from server.');
       } else {
-       
         console.error('Error in setting up the request:', error.message);
+        toast.error('Request setup error.');
       }
-      toast.error('An error occurred while submitting the booking.');
     }
   };
 
@@ -64,23 +69,23 @@ const Booking = () => {
           type="email"
           id="email"
           value={user}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => setUser(e.target.value)}
           required
         />
         <label htmlFor="destination">Destination:</label>
         <input
           type="text"
           id="destination"
-          value={destination}
-          onChange={(e) => setDestination(e.target.value)}
+          value={destinationId}
+          readOnly // Make the destination field read-only
           required
         />
         <label htmlFor="trip">Trip:</label>
         <input
           type="text"
           id="trip"
-          value={trip}
-          onChange={(e) => setTrip(e.target.value)}
+          value={tripid}
+          readOnly // Make the trip field read-only
           required
         />
         <label htmlFor="phone">Phone Number:</label>
@@ -91,14 +96,14 @@ const Booking = () => {
           onChange={(e) => setPhone(e.target.value)}
           required
         />
-        <label htmlFor="cost">Cost:</label>
+        {/* <label htmlFor="cost">Cost:</label>
         <input
           type="text"
           id="cost"
           value={cost}
           onChange={(e) => setCost(e.target.value)}
           required
-        />
+        /> */}
         <label htmlFor="date">Date:</label>
         <input
           type="date"

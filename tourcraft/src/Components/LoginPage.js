@@ -4,7 +4,6 @@ import { useNavigate, NavLink } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { FaUser, FaLock } from "react-icons/fa";
-
 import './login.css';
 import { setInitialCredentials } from '../app/slices/authSlice';
 
@@ -16,44 +15,39 @@ const LoginPage = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const fetchData = (token) => {
+
+  const fetchData = async (token) => {
     try {
-      axios.get('http://127.0.0.1:8000/users/api/auth_user/', {
+      const response = await axios.get('http://127.0.0.1:8000/users/api/auth_user/', {
         headers: {
           Authorization: `Token ${token}`
         }
-      }).then(response => {
-        dispatch(setInitialCredentials({
-          id: response.data.id,
-          name: response.data.name,
-          email: response.data.email,
-          role: response.data.role,
-          phonenumber: response.data.phonenumber,
-          nationality: response.data.nationality,
-          token: token,
-          isAuthenticated: true
-        }))
-        toast.success("Login successful!")
-        navigate("/")
-      }).catch(err => {
-        console.log(err);
-        toast.error("Something went wrong")
-      })
+      });
+      dispatch(setInitialCredentials({
+        id: response.data.id,
+        name: response.data.name,
+        email: response.data.email,
+        role: response.data.role,
+        phonenumber: response.data.phonenumber,
+        nationality: response.data.nationality,
+        token: token,
+        isAuthenticated: true
+      }));
+      toast.success("Login successful!");
+      navigate("/");
     } catch (error) {
+      console.error('Error fetching user data:', error);
       toast.error("Failed to fetch user data");
     }
   };
 
-  const onSubmit = () => {
+  const onSubmit = async (e) => {
+    e.preventDefault();
     try {
-      axios.post('http://127.0.0.1:8000/users/login/', formData)
-        .then((res) => {
-          fetchData(res.data.token)
-          console.log(res.data)
-        })
-        .catch(_err => {
-          toast.error(_err.response.data.message)
-        })
+      const response = await axios.post('http://127.0.0.1:8000/users/login/', formData);
+      const { token } = response.data;
+      localStorage.setItem('token', token);
+      fetchData(token);
     } catch (error) {
       console.error("Login failed:", error);
       toast.error("Something went wrong with login");
@@ -62,7 +56,7 @@ const LoginPage = () => {
 
   return (
     <div className='wrapperrrr'>
-      <form>
+      <form onSubmit={onSubmit}>
         <h1>Login</h1>
         <div className="input-box">
           <input type="text" name="email" placeholder='Email' value={formData.email} onChange={handleChange} required />
@@ -76,7 +70,7 @@ const LoginPage = () => {
           <label><input type="checkbox" />Remember me</label>
           <a href="#">Forgot password?</a>
         </div>
-        <button onClick={onSubmit} type="button">Login</button>
+        <button type="submit">Login</button>
         <div className="register-link">
           <p>Don't have an account? <NavLink to="/signup">Register</NavLink></p>
         </div>

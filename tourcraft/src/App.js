@@ -38,7 +38,8 @@ const App = () => {
           <Route path="/pokhara" element={<Destination1 />} />
           <Route path="/lumbini" element={<Destination2 />} />
           <Route path="/destination/:destinationId" element={<Destination3 />} />
-          <Route path='/booking' element={<Booking />} />
+          <Route path="/booking/:destinationId/:tripid" element={<Booking/>} />
+          {/* <Route path='/booking' element={<Booking />} /> */}
           <Route path='/feedback' element={<Feedback />} />
           <Route path='/confirmation' element={<ConfirmationPage />} />
           <Route path='/khalti' element={<CheckoutForm />} />
