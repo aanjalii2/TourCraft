@@ -4,8 +4,10 @@ import './Booking.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Booking = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState('');
   const [phone, setPhone] = useState('');
   // const [cost, setCost] = useState('');
@@ -39,6 +41,8 @@ const Booking = () => {
 
       console.log('Booking submitted successfully:', response.data);
       toast.success('Booking submitted successfully');
+
+      navigate(`/khalti/${response.data.id}`); // Redirect to confirmation page
 
       // Reset form fields
       setUser('');

@@ -26,9 +26,9 @@ urlpatterns = [
     path('destinations/<int:destination_id>/', DestinationDeleteAPIView.as_view(), name='destination-delete'),
     path('images/', display_images, name = 'images'),
     path('bookings/', BookingListCreateAPIView.as_view(), name='booking-list'),
+    path('bookings/<int:booking_id>/initiate_payment/', views.initiate_payment, name='initiate_payment'),
     path('trips/', TripListView.as_view()),
     path('trips/<str:destination_name>/', TripListView.as_view(), name='trip_by_destination'),
-    path('api/payment/initiate/', views.initiate_payment),
     # path("verify-email/", views.verify_email, name="verify-email"),
     # path("resend-otp", views.resend_otp, name="resend-otp"), 
 ]

@@ -174,21 +174,32 @@ class UserView(APIView):
             return Response({'error': f'Error decoding token: {str(e)}'}, status=status.HTTP_401)
 
 @api_view(['POST'])
-def initiate_payment(request):
-    data = request.data
-    serializer = PaymentSerializer(data=data)
-    if serializer.is_valid():
-        serializer.save()  # Save payment data to the database
-        khalti_url = "https://a.khalti.com/api/v2/epayment/initiate/"
-        headers = {
-            "Content-Type": "application/json",
-            "Authorization": "Key e1efcb9caf0b48159a0a4bf5da0a3cfc"
-        }
+def initiate_payment(request, booking_id):
+    booking = Booking.objects.get(id=booking_id)
 
-        try:
-            response = requests.post(khalti_url, json=data, headers=headers)
-            response_data = response.json()
-            return Response({'payment_url': response_data.get('payment_url')}, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    khalti_url = "https://a.khalti.com/api/v2/epayment/initiate/"
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": "Key e1efcb9caf0b48159a0a4bf5da0a3cfc"
+    }
+
+    khalti_body = {
+        "amount": int(booking.cost * 100),
+        "purchase_order_id": booking.id,
+        "purchase_order_name": f"Booking for {booking.destination.name} on {booking.date}",
+        "website_url": "http://localhost:3000/",
+        "return_url": f"http://localhost:3000/confirmation/{booking.id}",
+        "customer_info": {
+            "name": booking.user.name,
+            "email": booking.user.email,
+            "phone": booking.phone
+        }
+    }
+
+    try:
+        response = requests.post(khalti_url, json=khalti_body, headers=headers)
+        response_data = response.json()
+        Payment.objects.create(amount=booking.cost, booking=booking, pidx=response_data.get('pidx'), paymentURL=response_data.get('payment_url'))
+        return Response({'payment_url': response_data.get('payment_url')}, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

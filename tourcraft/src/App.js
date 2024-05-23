@@ -41,16 +41,10 @@ const App = () => {
           <Route path="/booking/:destinationId/:tripid" element={<Booking/>} />
           {/* <Route path='/booking' element={<Booking />} /> */}
           <Route path='/feedback' element={<Feedback />} />
-          <Route path='/confirmation' element={<ConfirmationPage />} />
-          <Route path='/khalti' element={<CheckoutForm />} />
+          <Route path='/confirmation/:bookingId' element={<ConfirmationPage />} />
+          <Route path='/khalti/:bookingId' element={<CheckoutForm />} />
           <Route path='/profile' element={<Profile />} />
-          
-          
-
-          
-          
        </Routes>
-    
     <ToastContainer/>
 
     </div>
