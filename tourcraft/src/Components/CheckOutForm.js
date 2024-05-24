@@ -3,12 +3,18 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 const CheckoutForm = () => {
+<<<<<<< HEAD
   const [message, setMessage] = useState('');
   const { bookingId } = useParams();
+=======
+  const [message] = useState('');
+  const { bookingId } = useParams(); 
+>>>>>>> 7d02c7ee286b90be4499e566511b03739c05ac83
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+<<<<<<< HEAD
     const token = localStorage.getItem('token');
     if (!token) {
       setMessage('Token not found');
@@ -41,6 +47,26 @@ const CheckoutForm = () => {
         setMessage('An error occurred while initiating payment. Please try again.');
       }
     }
+=======
+    const token = localStorage.getItem('token'); // Retrieve the token from localStorage
+      if (!token) {
+        throw new Error('Token not found');
+      }
+
+    let axiosInstance = axios.create({
+      baseURL: "http://127.0.0.1:8000/",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": 'Key e1efcb9caf0b48159a0a4bf5da0a3cfc'
+      }
+    })
+
+    await axiosInstance.post(`/users/bookings/${bookingId}/initiate_payment/`)
+      .then(res => {
+        window.location.replace(res.data.payment_url);
+      })
+      .catch(e => console.log(e));
+>>>>>>> 7d02c7ee286b90be4499e566511b03739c05ac83
   };
 
   return (

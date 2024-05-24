@@ -42,7 +42,10 @@ const App = () => {
           <Route path='/confirmation/:bookingId' element={<ConfirmationPage />} />
           <Route path='/khalti/:bookingId' element={<CheckoutForm />} />
           <Route path='/profile' element={<Profile />} />
+<<<<<<< HEAD
           <Route path='/stripe' element={<PaymentForm />} />
+=======
+>>>>>>> 7d02c7ee286b90be4499e566511b03739c05ac83
        </Routes>
     <ToastContainer/>
 

@@ -29,7 +29,10 @@ urlpatterns = [
     path('bookings/<int:booking_id>/initiate_payment/', views.initiate_payment, name='initiate_payment'),
     path('trips/', TripListView.as_view()),
     path('trips/<str:destination_name>/', TripListView.as_view(), name='trip_by_destination'),
+<<<<<<< HEAD
     path('test-payment/', views.test_payment),
+=======
+>>>>>>> 7d02c7ee286b90be4499e566511b03739c05ac83
     # path("verify-email/", views.verify_email, name="verify-email"),
     # path("resend-otp", views.resend_otp, name="resend-otp"), 
 ]

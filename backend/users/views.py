@@ -204,6 +204,7 @@ def initiate_payment(request, booking_id):
     try:
         response = requests.post(khalti_url, json=khalti_body, headers=headers)
         response_data = response.json()
+<<<<<<< HEAD
         if response.status_code >= 200 or response.status_code < 300:
             Payment.objects.create(amount=booking.cost, booking=booking, pidx=response_data.get('pidx'), paymentURL=response_data.get('payment_url'))
             return Response({'payment_url': response_data.get('payment_url')}, status=status.HTTP_200_OK)
@@ -223,3 +224,9 @@ def test_payment(request):
         receipt_email='test@example.com'
         )
     return Response(status=status.HTTP_200_OK, data=test_payment_intent)
+=======
+        Payment.objects.create(amount=booking.cost, booking=booking, pidx=response_data.get('pidx'), paymentURL=response_data.get('payment_url'))
+        return Response({'payment_url': response_data.get('payment_url')}, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+>>>>>>> 7d02c7ee286b90be4499e566511b03739c05ac83
