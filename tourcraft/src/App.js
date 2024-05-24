@@ -12,14 +12,13 @@ import { ToastContainer} from "react-toastify";
 import "./App.css";
 import LoginPage from './Components/LoginPage';
 import DestinationSelect from './Components/DestinationSelect';
-import Destination1 from './Components/Destination1';
-import Destination2 from './Components/Destination2';
 import Destination3 from './Components/Destination3';
 import Booking from './Components/Booking';
 import Feedback from './Components/Feedback';
 import ConfirmationPage from './Components/ConfirmationPage';
 import CheckoutForm from './Components/CheckOutForm';
 import Profile from './Components/Profile';
+import PaymentForm from './Components/Stripe'
 
 const App = () => {
  return (
@@ -35,22 +34,16 @@ const App = () => {
           <Route path="/about" element={<Footer />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/destinationselect" element={<DestinationSelect />} />
-          <Route path="/pokhara" element={<Destination1 />} />
-          <Route path="/lumbini" element={<Destination2 />} />
+         
           <Route path="/destination/:destinationId" element={<Destination3 />} />
           <Route path="/booking/:destinationId/:tripid" element={<Booking/>} />
           {/* <Route path='/booking' element={<Booking />} /> */}
           <Route path='/feedback' element={<Feedback />} />
-          <Route path='/confirmation' element={<ConfirmationPage />} />
-          <Route path='/khalti' element={<CheckoutForm />} />
+          <Route path='/confirmation/:bookingId' element={<ConfirmationPage />} />
+          <Route path='/khalti/:bookingId' element={<CheckoutForm />} />
           <Route path='/profile' element={<Profile />} />
-          
-          
-
-          
-          
+          <Route path='/stripe' element={<PaymentForm />} />
        </Routes>
-    
     <ToastContainer/>
 
     </div>
@@ -59,3 +52,5 @@ const App = () => {
 };
 
 export default App;
+// App.js
+

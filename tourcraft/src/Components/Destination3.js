@@ -8,29 +8,27 @@ import { NavLink } from 'react-router-dom';
 
 const TripInformation = ({ trip }) => {
   const { destinationId } = useParams();
-  // const { tripid } = useParams();
   return (
-    <div className="w">
+    <div className="trip-info-container">
       <h2>Trip Information</h2>
       <div>
-        <p>Destination: {destinationId}</p>
-        <p>Trip Duration: {trip.trip_duration}</p>
-        <p>Max. Altitude: {trip.max_altitude}</p>
-        <p>Trip Type: {trip.trip_type}</p>
-        <p>Transport: {trip.transport}</p>
-        <p>Cost: {trip.cost}</p>
+        <p><strong>Destination:</strong> {destinationId}</p>
+        <p><strong>Trip Duration:</strong> {trip.trip_duration}</p>
+        <p><strong>Max. Altitude:</strong> {trip.max_altitude}</p>
+        <p><strong>Trip Type:</strong> {trip.trip_type}</p>
+        <p><strong>Transport:</strong> {trip.transport}</p>
+        <p><strong>Cost:</strong> {trip.cost}</p>
         <h3>Highlights</h3>
-        <p>
-          'Exquisite views of the world\'s famous mountain peaks',
-          'Scenic flight over the Himalayas',
-          'Very less tiring journey giving you more energy to explore nature'
-        </p>
+        <ul>
+          <li>Exquisite views of the world's famous mountain peaks</li>
+          <li>Scenic flight over the Himalayas</li>
+          <li>Very less tiring journey giving you more energy to explore nature</li>
+        </ul>
         <NavLink to={`/booking/${destinationId}/${trip.id}`}>
-          <button className="secondary-button">
+          <button className="secondary-buttonn">
             Book Now
           </button>
         </NavLink>
-        
       </div>
     </div>
   );
@@ -38,9 +36,6 @@ const TripInformation = ({ trip }) => {
 
 const Destination3 = () => {
   const { name } = useParams();
-  const { destinationId } = useParams();
-
-  const { description } = useParams();
   const [tripData, setTripData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -65,9 +60,7 @@ const Destination3 = () => {
 
     const fetchDestinations = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/users/destinations/', {
-          
-        });
+        const response = await axios.get('http://127.0.0.1:8000/users/destinations/');
         setDestinations(response.data);
       } catch (error) {
         console.error('Error fetching destinations:', error);
@@ -82,10 +75,10 @@ const Destination3 = () => {
   }, [name]);
 
   return (
-    <div className="home-container">
-      <div className="home-banner-container">
-        <div className="home-text-section">
-          <h1 className="primary-heading">
+    <div className="home-containerr">
+      <div className="home-banner-containerr">
+        <div className="home-text-sectionn">
+          <h1 className="primary-headingg">
             {name}
           </h1>
           {destinations.map(destination => (
@@ -94,14 +87,14 @@ const Destination3 = () => {
             </div>
           ))}
         </div>
-        <div className="home-image-section">
-          <img src={image3} alt="" />
+        <div className="home-image-sectionnn">
+          <img src={image3} alt="Destination" />
         </div>
         <div className="home-image-sectionn">
-          <img src={image33} alt="" />
+          <img src={image33} alt="Destination" />
         </div>
       </div>
-      <div className="home-content">
+      <div className="home-contentt">
         {loading ? (
           <div>Loading...</div>
         ) : error ? (

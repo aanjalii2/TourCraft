@@ -1,42 +1,46 @@
 import React, { useState } from 'react';
-import KhaltiCheckout from 'khalti-checkout-web';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const CheckoutForm = () => {
-  const navigate = useNavigate();
-  const [message] = useState('');
+  const [message, setMessage] = useState('');
+  const { bookingId } = useParams();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let formData = {
-      "return_url": "https://example.com/payment/",
-      "website_url": "https://example.com/",
-      "amount": 13000,
-      "purchase_order_id": "test12",
-      "purchase_order_name": "test",
-      "customer_info": {
-        "name": "Khalti Bahadur",
-        "email": "example@gmail.com",
-        "phone": "9800000123"
-      }
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setMessage('Token not found');
+      return;
     }
 
-    let axiosInstance = axios.create({
-      baseURL: "https://a.khalti.com/api/v2/",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": 'Key e1efcb9caf0b48159a0a4bf5da0a3cfc'
-      }
-    })
+    try {
+      const axiosInstance = axios.create({
+        baseURL: "http://127.0.0.1:8000/",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": 'Key e1efcb9caf0b48159a0a4bf5da0a3cfc'
+        }
+      });
 
-    await axiosInstance.post("/epayment/initiate/", formData)
-      .then(res => {
-        // console.log(res.data.payment_url);
-        window.location.replace(res.data.payment_url);
-      })
-      .catch(e => console.log(e));
+      const response = await axiosInstance.post(`/users/bookings/${bookingId}/initiate_payment/`);
+      window.location.replace(response.data.payment_url);
+    } catch (error) {
+      console.error('Error initiating payment:', error);
+      if (error.response) {
+        console.error('Response data:', error.response.data);
+        console.error('Response status:', error.response.status);
+        console.error('Response headers:', error.response.headers);
+        setMessage(`Error: ${error.response.data.error || error.response.statusText}`);
+      } else if (error.request) {
+        console.error('No response received:', error.request);
+        setMessage('No response received from server');
+      } else {
+        console.error('Error details:', error.message);
+        setMessage('An error occurred while initiating payment. Please try again.');
+      }
+    }
   };
 
   return (
@@ -44,7 +48,6 @@ const CheckoutForm = () => {
       <button type="submit">Pay with Khalti</button>
       {message && <p>{message}</p>}
     </form>
-
   );
 };
 

@@ -36,7 +36,7 @@ class TripSerializer(serializers.ModelSerializer):
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
-        fields = 'phone', 'date', 'destination', 'trip'
+        fields = 'phone', 'date', 'destination', 'trip', 'id'
 
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:

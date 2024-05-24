@@ -1,24 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Booking.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Booking = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState('');
   const [phone, setPhone] = useState('');
-  // const [cost, setCost] = useState('');
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const { destinationId, tripid } = useParams(); 
+
+  useEffect(() => {
+    // Log the token on component mount to verify it exists in localStorage
+    const token = localStorage.getItem('token');
+    console.log('Component mounted, token from localStorage:', token);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    
-
     try {
       const token = localStorage.getItem('token'); // Retrieve the token from localStorage
+      console.log('Retrieved Token:', token); // Log the token for debugging
+
       if (!token) {
         throw new Error('Token not found');
       }
@@ -40,14 +47,19 @@ const Booking = () => {
       console.log('Booking submitted successfully:', response.data);
       toast.success('Booking submitted successfully');
 
+      navigate(`/khalti/${response.data.id}`); // Redirect to confirmation page
+
       // Reset form fields
       setUser('');
       setPhone('');
-      // setCost('');
       setDate(new Date().toISOString().split('T')[0]);
     } catch (error) {
       console.error('Error submitting booking:', error);
-      if (error.response) {
+
+      if (error.message === 'Token not found') {
+        console.error('Token was not found in localStorage.');
+        toast.error('Token not found. Please log in again.');
+      } else if (error.response) {
         console.error('Server responded with:', error.response.data);
         toast.error(`Error: ${JSON.stringify(error.response.data)}`);
       } else if (error.request) {
@@ -96,14 +108,7 @@ const Booking = () => {
           onChange={(e) => setPhone(e.target.value)}
           required
         />
-        {/* <label htmlFor="cost">Cost:</label>
-        <input
-          type="text"
-          id="cost"
-          value={cost}
-          onChange={(e) => setCost(e.target.value)}
-          required
-        /> */}
+        
         <label htmlFor="date">Date:</label>
         <input
           type="date"
