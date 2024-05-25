@@ -1,30 +1,29 @@
-from django.shortcuts import render,redirect
-# Viewsets provide methods for CRUD operations
-from rest_framework import viewsets,status,generics
-from .models import CustomUser,Booking,Destination
-from .serializer import CustomUserSerilizer,LoginSerializer,DestinationSerializer,BookingSerializer
-from rest_framework.response import Response
-from rest_framework.exceptions import AuthenticationFailed 
-from django.contrib.auth import authenticate
-from rest_framework.generics import ListCreateAPIView
-from rest_framework.views import APIView
-from rest_framework.permissions import IsAdminUser,IsAuthenticated
-from django.http import HttpResponse
-from rest_framework.authtoken.models import Token
-from rest_framework.authentication import TokenAuthentication
-from django.conf import settings
 import os
-from rest_framework.decorators import api_view, permission_classes
-import requests
-from .models import Trip
-from .serializer import TripSerializer
-from .models import Payment
-from .serializer import PaymentSerializer
-import stripe
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 
-stripe.api_key = 'pk_test_51PBGjISISl0vzfh8QGBNNtreHTULMsu0L0vJzvQD3UfYD92fs3FeOqchN3anlkTI7EIA7lsi2lsJcI1R1eZ7iVNU00pckPGdc1'
+import requests
+import stripe
+from django.conf import settings
+from django.contrib.auth import authenticate
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import redirect, render
+from django.views.decorators.csrf import csrf_exempt
+# Viewsets provide methods for CRUD operations
+from rest_framework import generics, status, viewsets
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.authtoken.models import Token
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.generics import ListCreateAPIView
+from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .models import Booking, CustomUser, Destination, Payment, Trip
+from .serializer import (BookingSerializer, CustomUserSerilizer,
+                         DestinationSerializer, LoginSerializer,
+                         PaymentSerializer, TripSerializer)
+
+stripe.api_key = 'sk_test_51PKB69P1JONaS2WcZJneQTkc5ayWdzy7P4Vm3HfhzBzBVPCkm2z44KlWYCtIifq4p1NJE4eore889obR5Nt2ZXiZ00zdJ15hc1'
 
 class CustomUserViewSet(viewsets.ModelViewSet):
     queryset= CustomUser.objects.all()
@@ -153,6 +152,19 @@ class BookingListCreateAPIView(generics.ListCreateAPIView):
         trip_obj = Trip.objects.get(id=trip.id)
         serializer.save(cost=trip_obj.cost, user=self.request.user)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def user_bookings(request, email):
+    if request.user.is_authenticated:
+        user = CustomUser.objects.get(email=email)
+        # Query the bookings for the authenticated user with the provided email
+        bookings = Booking.objects.filter(user=user)
+        serializer = BookingSerializer(bookings, many=True)
+        return Response(serializer.data)
+    else:
+        return Response(status=401)  # Unauthorized
+
+
 class BookingRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
@@ -180,6 +192,7 @@ class UserView(APIView):
 
 @api_view(['POST'])
 def initiate_payment(request, booking_id):
+    # user = CustomUser.objects.get(email=email)
     booking = Booking.objects.get(id=booking_id)
 
     khalti_url = "https://a.khalti.com/api/v2/epayment/initiate/"
@@ -204,7 +217,6 @@ def initiate_payment(request, booking_id):
     try:
         response = requests.post(khalti_url, json=khalti_body, headers=headers)
         response_data = response.json()
-<<<<<<< HEAD
         if response.status_code >= 200 or response.status_code < 300:
             Payment.objects.create(amount=booking.cost, booking=booking, pidx=response_data.get('pidx'), paymentURL=response_data.get('payment_url'))
             return Response({'payment_url': response_data.get('payment_url')}, status=status.HTTP_200_OK)
@@ -213,20 +225,38 @@ def initiate_payment(request, booking_id):
 
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
     
 
 
-@api_view(['POST'])
-def test_payment(request):
-    test_payment_intent = stripe.PaymentIntent.create(
-        amount=1000, currency='pln', 
-        payment_method_types=['card'],
-        receipt_email='test@example.com'
-        )
-    return Response(status=status.HTTP_200_OK, data=test_payment_intent)
-=======
-        Payment.objects.create(amount=booking.cost, booking=booking, pidx=response_data.get('pidx'), paymentURL=response_data.get('payment_url'))
-        return Response({'payment_url': response_data.get('payment_url')}, status=status.HTTP_200_OK)
-    except Exception as e:
-        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
->>>>>>> 7d02c7ee286b90be4499e566511b03739c05ac83
+class CreateCheckoutSession(APIView):
+    authentication_classes = []
+
+    def post(self, request, booking_id):
+        booking = Booking.objects.get(id=booking_id)
+        price = int(booking.cost * 100)
+        product_name = f"Booking for {booking.destination.name} on {booking.date}"
+        
+        try:
+            checkout_session = stripe.checkout.Session.create(
+                line_items=[
+                    {
+                        "price_data": {
+                            "currency": "npr",
+                            "product_data": {
+                                "name": product_name,
+                            },
+                            "unit_amount": price,
+                        },
+                        "quantity": 1,
+                    }
+                ],
+                mode="payment",
+                success_url=f"http://localhost:3000/confirmation/{booking.id}",
+                cancel_url="http://localhost:3000/destinationselect",
+            )
+            
+            return redirect(checkout_session.url)
+        except Exception as e:
+            print(e)
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

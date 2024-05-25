@@ -1,10 +1,12 @@
-import axios from 'axios';
+import axios from "axios";
 
-const ApiService = axios.create({
-  baseURL: 'http://localhost:8000', // Adjust this URL according to your Django server
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+const ApiService = (token = null) =>
+	axios.create({
+		baseURL: "http://localhost:8000",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: token,
+		},
+	});
 
 export default ApiService;

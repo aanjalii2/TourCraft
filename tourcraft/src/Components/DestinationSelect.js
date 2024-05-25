@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './DestinationSelect.css';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const truncateDescription = (desc, maxLength) => {
   if (desc.length > maxLength) {

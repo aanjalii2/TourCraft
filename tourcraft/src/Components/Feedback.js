@@ -1,16 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import { selectUserName, selectEmail } from '../app/slices/authSlice';
+import { NavLink } from 'react-router-dom'; // Adjust the path as necessary
 
 import './Feedback.css';
 
 const Feedback = () => {
+  const userName = useSelector(selectUserName);
+  const userEmail = useSelector(selectEmail);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: '',
     date: new Date().toISOString().split('T')[0] // Get today's date in "YYYY-MM-DD" format
   });
+
+  useEffect(() => {
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      name: userName ? decodeURIComponent(userName) : '',
+      email: userEmail ? decodeURIComponent(userEmail) : ''
+    }));
+  }, [userName, userEmail]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,8 +42,8 @@ const Feedback = () => {
       
       // Clear the form after successful submission
       setFormData({
-        name: '',
-        email: '',
+        name: userName ? decodeURIComponent(userName) : '',
+        email: userEmail ? decodeURIComponent(userEmail) : '',
         message: '',
         date: new Date().toISOString().split('T')[0]
       });
@@ -82,7 +96,10 @@ const Feedback = () => {
           required
         />
 
+        
+        <NavLink to={`/`}>
         <button type="submit">Submit</button>
+            </NavLink>
       </form>
     </div>
   );

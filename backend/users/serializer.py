@@ -1,10 +1,7 @@
-from .models import CustomUser
 from rest_framework import serializers
-from .models import Destination
-from .models import Booking
 
-from .models import Payment
-from .models import Trip
+from .models import Booking, CustomUser, Destination, Payment, Trip
+
 
 class CustomUserSerilizer(serializers.ModelSerializer):
     class Meta:

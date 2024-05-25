@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import CustomUser
-from .models import Destination, Booking, Trip
+
+from .models import Booking, CustomUser, Destination, Payment, Trip
+
 
 class UserAdmin(admin.ModelAdmin):
     model = CustomUser
@@ -21,3 +22,8 @@ class TripAdmin(admin.ModelAdmin):
     model = Trip
     list_display = ['id', 'destination', 'trip_duration', 'max_altitude', 'trip_type', 'transport', 'cost']
 admin.site.register(Trip, TripAdmin)
+class PaymentAdmin(admin.ModelAdmin):
+    model = Payment
+    list_display = ['id', 'amount', 'created_at', 'booking_id', 'paymentURL']
+admin.site.register(Payment, PaymentAdmin)
+

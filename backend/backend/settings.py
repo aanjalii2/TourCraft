@@ -1,5 +1,6 @@
-from pathlib import Path
 import os
+from pathlib import Path
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure--!81ck-t@x3ml5tpkhd^gii2q#wq6zv6uq==d10fq#k5jtzkcc'
@@ -13,17 +14,20 @@ ALLOWED_HOSTS = []
 # Application definition
 INSTALLED_APPS = [
     'jazzmin',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
     'users.apps.UsersConfig',
-    'rest_framework',
-    'corsheaders',
-    'rest_framework.authtoken',
     'feedback',
+    
+    'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders',
     
 ]
 MIDDLEWARE = [
@@ -80,6 +84,7 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',   # Or your MySQL host
+        # 'PORT': '3307',        # Or your MySQL port
         'PORT': '3307',        # Or your MySQL port
     }
 }
@@ -161,3 +166,5 @@ EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
 EMAIL_HOST_USER = 'e211a946e38924'
 EMAIL_HOST_PASSWORD = '008189d5e49787'
 EMAIL_PORT = '2525'
+
+STRIPE_SECRET_KEY = 'sk_test_51PK0AvSBqogB5RHqqCHQMAa1wN7xBsEV0HYY9u4BWEIOvovstkQP8jDbwGYhgnIi1bsuM13r9b6GX4iqimFJ4vut00rhyD7hrk'

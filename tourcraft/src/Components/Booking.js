@@ -3,18 +3,23 @@ import axios from 'axios';
 import './Booking.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectEmail, selectUserId, selectphonenumber } from '../app/slices/authSlice'; // Adjust the path as necessary
 
 const Booking = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState('');
-  const [phone, setPhone] = useState('');
-  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const { destinationId, tripid } = useParams(); 
 
+  const email = decodeURIComponent(useSelector(selectEmail)); // Decode the email
+  const userId = useSelector(selectUserId);
+  const phoneFromStore = useSelector(selectphonenumber);
+
+  const [user, setUser] = useState(email);
+  const [phone, setPhone] = useState(phoneFromStore || '');
+  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+
   useEffect(() => {
-    // Log the token on component mount to verify it exists in localStorage
     const token = localStorage.getItem('token');
     console.log('Component mounted, token from localStorage:', token);
   }, []);
@@ -31,7 +36,7 @@ const Booking = () => {
       }
 
       const requestData = {
-        user,
+        user, // This is the email
         destination: destinationId, // Use destinationId from URL
         trip: tripid, // Use tripId from URL
         phone,
@@ -50,8 +55,8 @@ const Booking = () => {
       navigate(`/khalti/${response.data.id}`); // Redirect to confirmation page
 
       // Reset form fields
-      setUser('');
-      setPhone('');
+      setUser(email);
+      setPhone(phoneFromStore || '');
       setDate(new Date().toISOString().split('T')[0]);
     } catch (error) {
       console.error('Error submitting booking:', error);
