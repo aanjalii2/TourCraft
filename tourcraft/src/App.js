@@ -17,6 +17,7 @@ import Feedback from "./Components/Feedback";
 import ConfirmationPage from "./Components/ConfirmationPage";
 import CheckoutForm from "./Components/CheckOutForm";
 import Profile from "./Components/Profile";
+import MyBookings from "./Components/MyBookings";
 
 const App = () => {
 	return (
@@ -43,6 +44,7 @@ const App = () => {
 					path="/booking/:destinationId/:tripid"
 					element={<Booking />}
 				/>
+				<Route path="/my-bookings" element={<MyBookings />} />
 				{/* <Route path='/booking' element={<Booking />} /> */}
 				<Route path="/feedback" element={<Feedback />} />
 				<Route

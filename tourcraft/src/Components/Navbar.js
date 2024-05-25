@@ -103,6 +103,7 @@ const Navbar = () => {
         onClose={handleClose}
       >
         <MenuItem onClick={() => navigate("/profile")}>My Profile</MenuItem>
+        <MenuItem onClick={() => navigate("/my-bookings")}>My Bookings</MenuItem>
         <MenuItem onClick={() => navigate("/feedback")}>Feedback</MenuItem>
         {/* <MenuItem onClick={() => { handleClose(); navigate("/logout"); }}>Volunteering</MenuItem> */}
         <MenuItem onClick={() => { handleClose(); dispatch(logout()); navigate("/login"); toast.success("Logged out Successfully!"); }}>Logout</MenuItem>

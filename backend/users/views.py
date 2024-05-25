@@ -19,7 +19,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Booking, CustomUser, Destination, Payment, Trip
-from .serializer import (BookingSerializer, CustomUserSerilizer,
+from .serializer import (BookingDetailSerializer, BookingSerializer, CustomUserSerilizer,
                          DestinationSerializer, LoginSerializer,
                          PaymentSerializer, TripSerializer)
 
@@ -143,9 +143,13 @@ class DestinationDeleteAPIView(APIView):
 
 class BookingListCreateAPIView(generics.ListCreateAPIView):
     queryset = Booking.objects.all()
-    serializer_class = BookingSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
+
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return BookingDetailSerializer
+        return BookingSerializer
 
     def perform_create(self, serializer):
         trip = serializer.validated_data.get('trip')
@@ -218,16 +222,55 @@ def initiate_payment(request, booking_id):
         response = requests.post(khalti_url, json=khalti_body, headers=headers)
         response_data = response.json()
         if response.status_code >= 200 or response.status_code < 300:
-            Payment.objects.create(amount=booking.cost, booking=booking, pidx=response_data.get('pidx'), paymentURL=response_data.get('payment_url'))
+            try:
+                payment = Payment.objects.get(booking=booking)
+                payment.amount = booking.cost
+                payment.pidx = response_data.get('pidx')
+                payment.paymentURL = response_data.get('payment_url')
+                payment.save()
+            except Payment.DoesNotExist:
+                Payment.objects.create(amount=booking.cost, booking=booking, pidx=response_data.get('pidx'), paymentURL=response_data.get('payment_url'))
+
             return Response({'payment_url': response_data.get('payment_url')}, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Payment Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
-    
 
+@api_view(['POST'])
+def verify_payment(request, booking_id):
+    booking = Booking.objects.get(id=booking_id)
+    payment = Payment.objects.get(booking=booking)
+
+    khalti_verify_url = "https://a.khalti.com/api/v2/epayment/lookup/"
+    headers = {
+        "Authorization": "Key e1efcb9caf0b48159a0a4bf5da0a3cfc"
+    }
+
+    khalti_verify_body = {
+        "pidx": payment.pidx
+    }
+
+    try:
+        response = requests.post(khalti_verify_url, json=khalti_verify_body, headers=headers)
+        response_data = response.json()
+        print(response_data)
+        if response.status_code >= 200 or response.status_code < 300:
+            payment.status = "SUCCESS"
+            payment.save()
+            booking.status = "SUCCESS"
+            booking.save()
+            return Response({'message': 'Payment successful'}, status=status.HTTP_200_OK)
+        else:
+            payment.status = "FAILED"
+            payment.save()
+            booking.status = "FAILED"
+            booking.save()
+            return Response({'error': 'Payment verification failed'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class CreateCheckoutSession(APIView):
     authentication_classes = []
@@ -236,7 +279,7 @@ class CreateCheckoutSession(APIView):
         booking = Booking.objects.get(id=booking_id)
         price = int(booking.cost * 100)
         product_name = f"Booking for {booking.destination.name} on {booking.date}"
-        
+
         try:
             checkout_session = stripe.checkout.Session.create(
                 line_items=[

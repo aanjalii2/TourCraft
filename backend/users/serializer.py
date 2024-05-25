@@ -30,12 +30,20 @@ class TripSerializer(serializers.ModelSerializer):
     model = Trip
     fields = '__all__'
 
-class BookingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Booking
-        fields = 'phone', 'date', 'destination', 'trip', 'id'
-
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
         fields = '__all__'
+
+class BookingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Booking
+        fields = ('phone', 'date', 'destination', 'trip', 'id')
+
+class BookingDetailSerializer(serializers.ModelSerializer):
+    payments = PaymentSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Booking
+        fields = ('phone', 'date', 'destination', 'trip', 'id', 'payments', 'status')
+        depth = 1

@@ -29,6 +29,7 @@ urlpatterns = [
     path('bookings/', BookingListCreateAPIView.as_view(), name='booking-list'),
     path('users/bookings/<str:email>/', views.user_bookings, name='user_bookings'),
     path('bookings/<int:booking_id>/initiate_payment/', views.initiate_payment, name='initiate_payment'),
+    path('bookings/<int:booking_id>/verify_payment/', views.verify_payment, name='initiate_payment'),
     path('trips/', TripListView.as_view()),
     path('trips/<str:destination_name>/', TripListView.as_view(), name='trip_by_destination'),
     path(
